@@ -53,6 +53,17 @@ jobs:
           ${{ env.containerRegistry }}/${{ env.imageRepository }}:${{ env.tag }}
           ${{ env.containerRegistry }}/${{ env.imageRepository }}:latest
 
+      - name: Azure login
+        id: login
+        uses: azure/login@v1.4.3
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Set AKS context
+        id: set-context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: '${{ env.resourceGroupName }}' 
+          cluster-name: '${{ env.clusterName }}'
 #    - uses: Azure/aks-set-context@v1
 #      with:
 #        creds: '${{ secrets.AZURE_CREDENTIALS }}'
